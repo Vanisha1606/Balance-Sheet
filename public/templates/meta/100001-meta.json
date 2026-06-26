@@ -1,0 +1,16 @@
+{
+  "id": 100001,
+  "name": "Balance Sheet",
+  "description": "Balance Sheet iPad",
+  "type": "balance-sheet",
+  "device": "tablet",
+  "image": "/favicon.png",
+  "isPremium": false,
+  "price": {
+    "USD": 0
+  },
+  "hashtags": [
+    "balance-sheet",
+    "tablet"
+  ]
+}

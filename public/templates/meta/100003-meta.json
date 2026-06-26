@@ -1,0 +1,16 @@
+{
+  "id": 100003,
+  "name": "Balance Sheet",
+  "description": "Balance Sheet",
+  "type": "balance-sheet",
+  "device": "desktop",
+  "image": "/favicon.png",
+  "isPremium": false,
+  "price": {
+    "USD": 0
+  },
+  "hashtags": [
+    "balance-sheet",
+    "desktop"
+  ]
+}

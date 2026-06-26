@@ -1,0 +1,52 @@
+{
+  "name": "house-maintenance",
+  "private": true,
+  "version": "21.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run dev"
+  },
+  "dependencies": {
+    "@bcyesil/capacitor-plugin-printer": "^0.0.5",
+    "@capacitor/android": "^8.0.2",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/core": "^8.0.2",
+    "@capacitor/device": "^8.0.0",
+    "@capacitor/dialog": "^8.0.1",
+    "@capacitor/filesystem": "^8.1.0",
+    "@capacitor/ios": "^8.0.2",
+    "@capacitor/preferences": "^8.0.0",
+    "@capacitor/share": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0",
+    "@ionic/react": "^8.7.17",
+    "@ionic/react-router": "^8.7.17",
+    "@types/crypto-js": "^4.2.2",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.13.4",
+    "capacitor-email-composer": "^6.0.0",
+    "chart.js": "^4.5.1",
+    "crypto-js": "^4.2.0",
+    "framer-motion": "^12.29.2",
+    "html2canvas": "^1.4.1",
+    "ionicons": "^8.0.13",
+    "jspdf": "^4.0.0",
+    "react": "^19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.4",
+    "react-error-boundary": "^6.1.0",
+    "react-router": "^5.3.4",
+    "react-router-dom": "^5.3.4",
+    "react-signature-canvas": "^1.1.0-alpha.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.2",
+    "@vitejs/plugin-react": "^5.1.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  },
+  "description": "House Maintenance - An Ionic project"
+}
