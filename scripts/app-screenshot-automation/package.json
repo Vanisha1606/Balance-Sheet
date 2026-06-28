@@ -1,0 +1,14 @@
+{
+  "name": "balance-sheet-screenshot-automation",
+  "version": "1.0.0",
+  "description": "App Store screenshot automation for Balance Sheet",
+  "type": "module",
+  "scripts": {
+    "capture": "node capture-screenshots.js",
+    "capture:iphone": "node capture-screenshots.js iphone65",
+    "capture:ipad": "node capture-screenshots.js ipad13"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  }
+}

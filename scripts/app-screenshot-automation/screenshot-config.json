@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:5173",
+  "onboardingButtonText": "Start App",
+  "saveFileName": "My Balance Sheet",
+  "saveFileDialogTitle": "Save File",
+  "editCellMobile": "C7",
+  "editCellTablet": "D7",
+  "editValue": "50000",
+  "maxTabsMobile": 4,
+  "maxTabsTablet": 4
+}
