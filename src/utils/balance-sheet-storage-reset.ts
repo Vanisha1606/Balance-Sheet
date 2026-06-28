@@ -2,7 +2,7 @@ import { Preferences } from '@capacitor/preferences';
 import { ONBOARDING_STORAGE_KEY } from '../constants/onboarding';
 
 const STORAGE_VERSION_KEY = 'balance_sheet_storage_version';
-const CURRENT_STORAGE_VERSION = '8';
+const CURRENT_STORAGE_VERSION = '9';
 
 function clearWebLocalStorage(): void {
   localStorage.clear();
