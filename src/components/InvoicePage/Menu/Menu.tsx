@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as AppGeneral from "../socialcalc/index.js";
 import { File, Local } from "../../Storage/LocalStorage";
 import { isPlatform, IonToast, IonLoading } from "@ionic/react";
-import { EmailComposer } from "capacitor-email-composer";
 import { Printer } from "@bcyesil/capacitor-plugin-printer";
 import { IonActionSheet, IonAlert } from "@ionic/react";
 import {
@@ -23,8 +22,9 @@ import { useInvoice } from "../../../contexts/InvoiceContext";
 import { exportHTMLAsPDF } from "../../../services/exportAsPdf.js";
 import { exportAllSheetsAsPDF } from "../../../services/exportAllSheetsAsPdf";
 import { exportCSV, parseSocialCalcCSV } from "../../../services/exportAsCsv";
+import { sendNativeEmailWithPdf } from "../../../services/sendEmailWithPdf";
 import { Share } from "@capacitor/share";
-import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
+import { Filesystem, Directory } from "@capacitor/filesystem";
 import MenuDialogs from "./MenuDialogs.js";
 
 const Menu: React.FC<{
@@ -596,119 +596,42 @@ const Menu: React.FC<{
   };
 
   const sendEmail = async () => {
-    if (isPlatform("hybrid")) {
-      try {
-        const content = AppGeneral.getCurrentHTMLContent();
-        const invoiceIdentifier = invoiceId || selectedFile || "Invoice";
+    if (!isPlatform("hybrid")) {
+      alert("This Functionality works on Android/iOS devices");
+      return;
+    }
 
-        // For iOS, try using Share API with PDF as it's more reliable
-        if (isPlatform("ios")) {
-          try {
-            // Generate PDF for sharing via email on iOS
-            setToastMessage("Preparing invoice for email...");
-            setShowToast1(true);
+    try {
+      const content = AppGeneral.getCurrentHTMLContent();
+      const invoiceIdentifier = invoiceId || selectedFile || "BalanceSheet";
 
-            const htmlContent = AppGeneral.getCurrentHTMLContent();
-            const pdfBlob = await exportHTMLAsPDF(htmlContent, {
-              filename: invoiceIdentifier,
-              format: "a4",
-              orientation: "portrait",
-              margin: 10,
-              quality: 2,
-              returnBlob: true,
-            });
+      setToastMessage("Preparing balance sheet for email...");
+      setShowToast1(true);
 
-            if (pdfBlob) {
-              // Convert blob to base64
-              const reader = new FileReader();
-              reader.onloadend = async () => {
-                const base64Data = reader.result as string;
-                const base64 = base64Data.split(",")[1];
+      const result = await sendNativeEmailWithPdf({
+        htmlContent: content,
+        documentName: invoiceIdentifier,
+        subject: "Here is your Balance Sheet",
+        body: `Please find the attached balance sheet: ${invoiceIdentifier}`,
+      });
 
-                try {
-                  // Save to Cache directory (works on both iOS and Android)
-                  const tempFile = await Filesystem.writeFile({
-                    path: `${invoiceIdentifier}.pdf`,
-                    data: base64,
-                    directory: Directory.Cache,
-                  });
-
-                  // Share the file - iOS will show email option in share sheet
-                  await Share.share({
-                    title: `${invoiceIdentifier}.pdf`,
-                    text: `Please find the attached invoice with Invoice Id: ${invoiceIdentifier}`,
-                    url: tempFile.uri,
-                    dialogTitle: "Share Invoice via Email",
-                  });
-
-                  // Clean up after sharing
-                  setTimeout(async () => {
-                    try {
-                      await Filesystem.deleteFile({
-                        path: `${invoiceIdentifier}.pdf`,
-                        directory: Directory.Cache,
-                      });
-                    } catch (e) {
-                      // Ignore cleanup errors
-                    }
-                  }, 60000);
-                } catch (shareError) {
-                  console.error("Error sharing PDF:", shareError);
-                  setToastMessage("Failed to share invoice. Please try again.");
-                  setShowToast1(true);
-                }
-              };
-              reader.readAsDataURL(pdfBlob as Blob);
-            }
-          } catch (pdfError) {
-            console.error("Error generating PDF for iOS:", pdfError);
-            setToastMessage("Failed to prepare invoice for email.");
-            setShowToast1(true);
-          }
-        } else {
-          // Android: Use EmailComposer with HTML attachment
-          const filename = `${invoiceIdentifier}.html`;
-
-          // Use Cache directory for cross-platform compatibility
-          const tempFile = await Filesystem.writeFile({
-            path: filename,
-            data: content,
-            directory: Directory.Cache,
-            encoding: Encoding.UTF8,
-          });
-
-          // For Android, convert file URI to absolute path
-          const filePath = tempFile.uri.replace('file://', '');
-
-          await EmailComposer.open({
-            to: [],
-            cc: [],
-            bcc: [],
-            body: `Please find the attached invoice with Invoice Id: ${invoiceIdentifier}`,
-            attachments: [{ type: "absolute", path: filePath, name: filename }],
-            subject: "Here is your Invoice",
-            isHtml: true,
-          });
-
-          // Clean up the temp file after a delay
-          setTimeout(async () => {
-            try {
-              await Filesystem.deleteFile({
-                path: filename,
-                directory: Directory.Cache,
-              });
-            } catch (e) {
-              // Ignore cleanup errors
-            }
-          }, 60000);
-        }
-      } catch (error) {
-        console.error("Error sending email:", error);
-        setToastMessage("Failed to open email. Please try again.");
+      if (result === "composer") {
+        setToastMessage("Email composer opened with PDF attached.");
+        setShowToast1(true);
+      } else if (result === "share") {
+        setToastMessage("Opened Share sheet — choose Mail if available.");
+        setShowToast1(true);
+      } else if (result === "cancelled") {
+        setToastMessage("Add a Mail account in Settings → Apps → Mail to send email.");
+        setShowToast1(true);
+      } else {
+        setToastMessage("Failed to prepare email. Please try again.");
         setShowToast1(true);
       }
-    } else {
-      alert("This Functionality works on Android/iOS devices");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setToastMessage("Failed to open email. Please try again.");
+      setShowToast1(true);
     }
   };
 
