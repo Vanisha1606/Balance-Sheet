@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.ionicframework.balancesheet139047',
+  appId: 'com.aspiring.BalanceSheet',
   appName: 'BalanceSheet',
   webDir: 'dist',
   ios: {
