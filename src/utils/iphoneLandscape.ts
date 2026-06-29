@@ -12,10 +12,8 @@ export function isNativeIphone(): boolean {
   return isPlatform('iphone');
 }
 
-/** iPhone layout should use landscape / tablet-style UI. */
+/** iPhone uses portrait mobile layout (not tablet/landscape). */
 export function isIphoneLandscapeLayout(): boolean {
-  if (isNativeIphone()) return true;
-  if (isPlatform('iphone')) return window.innerWidth > window.innerHeight;
   return false;
 }
 

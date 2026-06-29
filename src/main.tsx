@@ -5,14 +5,10 @@ import { initializeDataLayer } from './data';
 import { initializeEdgeToEdgeStatusBar } from './hooks/useStatusBar';
 import { setupEnglishKeyboard } from './utils/english-input';
 import { ensureBalanceSheetFreshStorage } from './utils/balance-sheet-storage-reset';
-import { watchIphoneLandscapeClass } from './utils/iphoneLandscape';
-import './styles/iphone-landscape.css';
-
 async function initApp() {
   try {
     await initializeEdgeToEdgeStatusBar();
     setupEnglishKeyboard();
-    watchIphoneLandscapeClass();
 
     const didReset = await ensureBalanceSheetFreshStorage();
     if (didReset && import.meta.env.DEV) {

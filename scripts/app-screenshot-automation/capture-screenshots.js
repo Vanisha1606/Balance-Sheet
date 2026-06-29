@@ -11,13 +11,13 @@ const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 
 const devices = {
   iphone65: {
-    width: 926,
-    height: 428,
+    width: 428,
+    height: 926,
     scale: 3,
-    landscape: true,
+    landscape: false,
     userAgent:
       'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1',
-    name: 'iPhone-6.5-inch-landscape',
+    name: 'iPhone-6.5-inch-portrait',
   },
   ipad13: {
     width: 1032,
@@ -120,14 +120,6 @@ async function captureCellEditModal(page, screenshotsDir, isTablet) {
   await page.waitForTimeout(400);
 }
 
-async function applyIphoneLandscapeUi(page) {
-  await page.evaluate(() => {
-    document.documentElement.classList.add('iphone-landscape');
-    document.body.classList.add('iphone-landscape');
-  });
-  await page.waitForTimeout(300);
-}
-
 async function run() {
   const args = process.argv.slice(2);
   const headed = args.includes('--headed') || args.includes('-h');
@@ -172,10 +164,6 @@ async function run() {
       await resetAppState(page);
       await page.goto(baseUrl);
 
-      if (isLandscapeIphone) {
-        await applyIphoneLandscapeUi(page);
-      }
-
       await page.waitForSelector('.step-title', { state: 'visible', timeout: 15000 });
       await page.waitForTimeout(2000);
       await page.screenshot({ path: path.join(screenshotsDir, '1_welcome.png') });
@@ -185,12 +173,10 @@ async function run() {
       );
       await startBtn.click();
       await page.waitForURL('**/app/dashboard/home**', { timeout: 15000 });
-      if (isLandscapeIphone) await applyIphoneLandscapeUi(page);
       await page.waitForTimeout(1500);
       await page.screenshot({ path: path.join(screenshotsDir, '2_dashboard.png') });
 
       await openEditorFromDashboard(page);
-      if (isLandscapeIphone) await applyIphoneLandscapeUi(page);
 
       const tabButtons = page.locator('.footer-type-btn');
       let tabCount = await tabButtons.count();

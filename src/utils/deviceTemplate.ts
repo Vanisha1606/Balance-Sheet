@@ -1,11 +1,11 @@
 import { isPlatform } from '@ionic/react';
 import type { TemplateMeta } from '../services/local-template-service';
-import { isIphoneLandscapeLayout } from './iphoneLandscape';
+import { isNativeIphone } from './iphoneLandscape';
 
-/** True on iPad and iPhone landscape (wide balance-sheet layout). */
+/** True on iPad only — iPhone always uses the mobile (portrait) template. */
 export function isTabletDevice(): boolean {
+  if (isNativeIphone() || isPlatform('iphone')) return false;
   if (isPlatform('ipad') || isPlatform('tablet')) return true;
-  if (isIphoneLandscapeLayout()) return true;
   return window.innerWidth >= 768;
 }
 
