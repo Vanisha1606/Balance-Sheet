@@ -1,5 +1,5 @@
 /**
- * Import Balance Sheet workbook templates from platforms/ios/www/templates/tab-home.html
+ * Import Balance Sheet workbook templates from balancesheetv1.msc / balancesheetv2.msc
  * into public/templates/data and meta (House-Maintenance structure).
  *
  * Post-processes templates:
@@ -15,23 +15,21 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
-const tabHome = path.join(root, '../platforms/ios/www/templates/tab-home.html');
+const repoRoot = path.join(root, '..');
+const ipadMscPath = path.join(repoRoot, 'balancesheetv1.msc');
+const iphoneMscPath = path.join(repoRoot, 'balancesheetv2.msc');
 
 const CURRENT_YEAR = 2026;
 const PRIOR_YEAR = 2025;
 /** Prefilled date shown as plain text in templates */
 const DATE_TEXT = 'Jun 26, 2026';
 
-const html = fs.readFileSync(tabHome, 'utf8');
-
-function extractTextarea(id) {
-  const m = html.match(new RegExp(`id="${id}"[^>]*>\\s*([\\s\\S]*?)\\s*</textarea>`));
-  if (!m) throw new Error(`textarea ${id} not found`);
-  return JSON.parse(m[1].trim());
+function loadMsc(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-const ipadMsc = extractTextarea('sheetdata');
-const iphoneMsc = extractTextarea('sheetdata1');
+const ipadMsc = loadMsc(ipadMscPath);
+const iphoneMsc = loadMsc(iphoneMscPath);
 
 const ipadFooters = [
   { index: 1, name: 'Introduction' },
