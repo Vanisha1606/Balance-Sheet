@@ -138,12 +138,7 @@
 }
 
 .onboarding-top-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: calc(max(env(safe-area-inset-top, 0px), 24px) + 8px) 16px 0;
-    max-width: 480px;
-    margin: 0 auto;
+    display: none;
 }
 
 .onboarding-nav-btn {
@@ -223,7 +218,6 @@
 .feature-item {
     display: flex;
     align-items: center;
-    gap: 16px;
     padding: 18px 20px;
     background: #ffffff;
     border-radius: 16px;
@@ -236,13 +230,6 @@
 }
 
 
-
-.feature-check-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    object-fit: contain;
-}
 
 /* Form Styles */
 .onboarding-form {
@@ -656,7 +643,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
 }
 
 .next-btn::part(native) {
@@ -664,12 +650,4 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-}
-
-.start-planning-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
-    object-fit: cover;
-    flex-shrink: 0;
 }

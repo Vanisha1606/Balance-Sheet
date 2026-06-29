@@ -680,9 +680,6 @@ const Files: React.FC<{
                   <thead>
                     <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
                       <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: '14px', fontWeight: '600', color: '#64748b', minWidth: '160px' }}>File Name</th>
-                      <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: '14px', fontWeight: '600', color: '#64748b' }}>Customer</th>
-                      <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: '14px', fontWeight: '600', color: '#64748b' }}>Amount</th>
-                      <th style={{ padding: '8px 14px', textAlign: 'left', fontSize: '14px', fontWeight: '600', color: '#64748b', minWidth: '150px' }}>Date</th>
                       <th style={{ padding: '8px 14px', textAlign: 'center', fontSize: '14px', fontWeight: '600', color: '#64748b' }}>Actions</th>
                     </tr>
                   </thead>
@@ -731,18 +728,6 @@ const Files: React.FC<{
                               }}>{meta.invoiceId}</span>
                             </div>
                           </td>
-                          <td style={{ padding: '8px 14px', color: '#475569', fontSize: '14px' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                              <span style={{ fontWeight: '500' }}>{meta.customer}</span>
-                              {(meta.phone) && (
-                                <span style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>
-                                  {[meta.phone].filter(Boolean).join(' • ')}
-                                </span>
-                              )}
-                            </div>
-                          </td>
-                          <td style={{ padding: '8px 14px', color: '#475569', fontSize: '14px' }}>{meta.amount}</td>
-                          <td style={{ padding: '8px 14px', color: '#475569', fontSize: '14px' }}>{meta.date}</td>
                           <td style={{ padding: '8px 14px', textAlign: 'center' }}>
                             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
                               <div
@@ -752,13 +737,13 @@ const Files: React.FC<{
                                 }}
                                 style={{
                                   cursor: 'pointer',
-                                  color: '#3b82f6',
+                                  color: '#6366f1',
                                   padding: '6px',
                                   borderRadius: '4px',
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  background: '#eff6ff'
+                                  background: '#eef2ff'
                                 }}
                                 title="Rename"
                               >

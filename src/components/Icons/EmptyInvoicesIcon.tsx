@@ -6,7 +6,7 @@ const EmptyInvoicesIcon: React.FC<{ width?: number; height?: number }> = ({
     height = 120,
 }) => {
     // Colors based on theme (Light)
-    const primaryColor = "#008066";
+    const primaryColor = "#6366f1";
     const secondaryColor = "#f1f5f9";
     const elementColor = "#e2e8f0";
     const paperColor = "#ffffff";

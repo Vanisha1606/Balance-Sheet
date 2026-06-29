@@ -39,7 +39,7 @@ async function resetAppState(page) {
   await page.evaluate(() => {
     localStorage.clear();
     sessionStorage.clear();
-    localStorage.setItem('balance_sheet_storage_version', '9');
+    localStorage.setItem('balance_sheet_storage_version', '10');
   });
 }
 

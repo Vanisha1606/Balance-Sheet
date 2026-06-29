@@ -14,7 +14,6 @@ import { useStatusBar, StatusBarPresets } from '../hooks/useStatusBar';
 import {
   ONBOARDING_SLIDES,
   ONBOARDING_STORAGE_KEY,
-  BALANCE_SHEET_LOGO,
 } from '../constants/onboarding';
 import './OnboardingPage.css';
 
@@ -64,14 +63,6 @@ const OnboardingPage: React.FC<OnboardingPageProps> = ({ onComplete }) => {
     <IonPage className="onboarding-page light">
       <IonContent fullscreen className="onboarding-content">
         <div className="onboarding-main">
-          {slideIndex === 0 && (
-            <div className="onboarding-top-actions">
-              <IonButton fill="clear" onClick={completeOnboarding}>
-                Skip Intro
-              </IonButton>
-            </div>
-          )}
-
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
@@ -99,12 +90,6 @@ const OnboardingPage: React.FC<OnboardingPageProps> = ({ onComplete }) => {
                     <div className="welcome-features">
                       {slide.features.map((feature) => (
                         <div className="feature-item" key={feature}>
-                          <img
-                            src={BALANCE_SHEET_LOGO}
-                            alt=""
-                            className="feature-check-icon"
-                            aria-hidden="true"
-                          />
                           <span>{feature}</span>
                         </div>
                       ))}
@@ -128,13 +113,7 @@ const OnboardingPage: React.FC<OnboardingPageProps> = ({ onComplete }) => {
 
           <div className="onboarding-footer">
             {isLastSlide ? (
-              <IonButton expand="block" className="action-btn start-planning-btn" onClick={completeOnboarding}>
-                <img
-                  src={BALANCE_SHEET_LOGO}
-                  alt=""
-                  className="start-planning-icon"
-                  aria-hidden="true"
-                />
+              <IonButton expand="block" color="primary" className="action-btn start-planning-btn" onClick={completeOnboarding}>
                 Start App
               </IonButton>
             ) : (
